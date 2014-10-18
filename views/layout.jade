@@ -3,5 +3,9 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js')
+    script(src='//code.jquery.com/jquery-1.11.0.min.js')
+    script(src='js/app.js')
+    script(src='/external/Chart.min.js')
+  body(ng-app='watson' ng-controller='graphCtrl')
     block content

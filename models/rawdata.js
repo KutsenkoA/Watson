@@ -16,4 +16,4 @@ var rawData = new Schema({
     }
 });
 
-exports.rawData = rawData;
+module.exports = mongoose.model('rawData', rawData);

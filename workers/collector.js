@@ -1,4 +1,5 @@
 var dgram = require('dgram'),
+    mongoose = require('../libs/mongoose'),
     rawData = require('../models/rawdata');
 
 var socket = dgram.createSocket('udp4');
@@ -9,13 +10,14 @@ socket.on("error", function (err) {
 });
 
 socket.on("message", function (msg, rinfo) {
-  console.log("socket got: " + msg + " from " +
+  console.log("socket got: ", msg.readInt32BE(), " from " +
     rinfo.address + ":" + rinfo.port);
 
-  var data = new rawData({
+
+  var data = new mongoose.models.rawData({
       marker: 'test_data',
       time: new Date(),
-      value: msg
+      value: msg.readInt32BE()
   });
 
   data.save();
