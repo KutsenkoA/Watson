@@ -1,4 +1,5 @@
-var dgram = require('dgram');
+var dgram = require('dgram'),
+    rawData = require('../models/rawdata');
 
 var socket = dgram.createSocket('udp4');
 
@@ -10,6 +11,15 @@ socket.on("error", function (err) {
 socket.on("message", function (msg, rinfo) {
   console.log("socket got: " + msg + " from " +
     rinfo.address + ":" + rinfo.port);
+
+  var data = new rawData({
+      marker: 'test_data',
+      time: new Date(),
+      value: msg
+  });
+
+  data.save();
+
 });
 
 socket.on("listening", function () {
