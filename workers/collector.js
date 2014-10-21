@@ -1,6 +1,7 @@
 var dgram = require('dgram'),
     mongoose = require('../libs/mongoose'),
-    rawData = require('../models/rawdata');
+    rawData = require('../models/rawdata'),
+    parse = require('../libs/packetparser').parse;
 
 var socket = dgram.createSocket('udp4');
 

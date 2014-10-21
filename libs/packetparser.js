@@ -1,13 +1,22 @@
-var Buffer = require('buffer');
+//var Buffer = require('buffer');
 
 var parse = function(packet) {
+
+	var TYPE_FIELD_LENGTH = 2,
+			LENGTH_FIELD_LENGTH = 2,
+			DELLEN_OFFSET = 4,
+			DELIMITER_VALUE = 0xABD5;
 	
 	var readTLV = function(buf, position) {
 		var type = buf.readUInt16BE(position),
-				length = buf.readUInt16BE(position + 2),
-				value = new Buffer(length);
+				length = buf.readUInt16BE(position + TYPE_FIELD_LENGTH),
+				value = new Buffer(length),
+				copyStart = position + TYPE_FIELD_LENGTH + LENGTH_FIELD_LENGTH,
+				copyEnd = copyStart + length;
 
-				buf.copy(value, 0, position + 4, length);
+				if (!length) return false;
+	
+				buf.copy(value, 0, copyStart, copyEnd);
 
 				return {
 					type: type,
@@ -26,7 +35,7 @@ var parse = function(packet) {
 
 	var delimiter = packet.readUInt16BE(0);
 
-	if (delimiter !== 0xABD5) {
+	if (delimiter !== DELIMITER_VALUE) {
 		return {
 			result: false,
 			errorCode: 50,
@@ -36,7 +45,8 @@ var parse = function(packet) {
 
 	var packetLength = packet.readUInt16BE(2);
 
-	if (packetLength != packet.length - 2) {
+	console.log(packetLength, packet.length);
+	if (packetLength != packet.length - DELLEN_OFFSET) {
 		return {
 			result: false,
 			errorCode: 51,
@@ -49,11 +59,13 @@ var parse = function(packet) {
 		tlvs: []
 	};
 
-	var currentPosition = 4;
+	var currentPosition = DELLEN_OFFSET;
 
 	while (currentPosition < packetLength) {
-		parsed.tlvs.push(readTLV(packet, currentPosition));
-		currentPosition += parsed.tlvs[parsed.tlvs.length - 1].length;
+		var tlv = readTLV(packet, currentPosition);
+		if (!tlv) break;
+		parsed.tlvs.push(tlv);
+		currentPosition += parsed.tlvs[parsed.tlvs.length - 1].length + TYPE_FIELD_LENGTH + LENGTH_FIELD_LENGTH;
 	}
 
 	return parsed;
