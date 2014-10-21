@@ -10,18 +10,21 @@ socket.on("error", function (err) {
 });
 
 socket.on("message", function (msg, rinfo) {
-  console.log("socket got: ", msg.readInt32BE(), " from " +
+
+  var parsedPacket = parse(msg);
+
+  console.log("socket got: ", parsedPacket, " from " +
     rinfo.address + ":" + rinfo.port);
 
 
-  var data = new mongoose.models.rawData({
+/*  var data = new mongoose.models.rawData({
       marker: 'test_data',
       time: new Date(),
       value: msg.readInt32BE()
   });
 
   data.save();
-
+*/
 });
 
 socket.on("listening", function () {
