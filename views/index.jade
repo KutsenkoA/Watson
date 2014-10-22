@@ -1,6 +1,50 @@
 extends layout
 
-block content
-  h1= title
-  p Welcome to #{descr}
-  canvas(id="myChart", width="800", height="800")
+block navbar
+  nav
+    span.logo
+      i.icon-eye-open
+      = title
+    span.subtitle Smart house brains
+    button.blue(ng-click='toggleSignInDialog()')
+      i.icon-signin 
+      span Sign in
+
+block signin
+  div.signin(ng-show='showSignInDialog')
+
+block content 
+
+block dashboard
+  .dashboard(ng-controller='lastPacketController')
+    ul.tabs.left
+      li
+        a(href='#lastPacket') Last packet
+      li
+        a(href='#graph') Graph
+    #lastPacket.tab-content
+      .packet-caption
+        i.icon-time &nbsp;
+        span.value {{packet.time}}
+        span src ip:
+        span.value {{packet.src}}
+        span src port:
+        span.value {{packet.port}}
+      ul.button-bar.tvl(ng-repeat='tvl in packet.tvls')
+        li.green
+          a(href='')
+            i.icon-tag 
+            {{tvl.type}}
+        li
+          a(href='')
+            i.icon-resize-horizontal
+            {{tvl.length}}
+        li
+          a(href='')
+            {{tvl.value}}
+    #graph.tab-content
+
+block footer
+  .footer
+    .col-4
+      a(href='https://github.com/KutsenkoA/Watson') GitHub

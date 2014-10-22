@@ -1,8 +1,73 @@
 body {
-  padding: 50px;
+  padding: 0;
+  margin: 0;
+  background: rgb(37,37,37);
+  color: gray;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+nav {
+	padding: 5px;
+	background: black;
+	height: 46px;
+	border-bottom: 1px solid rgb(88, 88, 88);
+}
+
+nav button {
+	float: right;
+}
+
+.logo {
+	font-size: 32px;
+}
+
+.logo i {
+	color: darkgoldenrod;
+	padding-right: 6px;
+}
+
+.subtitle {
+	color: darkgoldenrod;
+}
+
+.signin {
+	border: 2px solid darkgray;
+	padding: 10px;
+	border-radius: 8px;
+	margin: 3px;
+	width: 300px;
+	background: rgb(12, 12, 12);
+	box-shadow: 0 0 20px black;
+	position: absolute;
+	right: 10px;
+	top: 40px;
+}
+
+.dashboard {
+	padding: 10px 50px;
+}
+
+.packet-caption {
+	font-size: 12px;
+	padding: 6px;
+}
+
+.packet-caption span {
+	padding: 5px;
+}
+
+.packet-caption span.value {
+	font-weight: bold;
+	padding-right: 20px;
+}
+
+.tvl {
+	padding: 0 3px !important;
+}
+
+.footer {
+	border-top: 1px dashed rgb(63, 63, 63);
+	font-size: 10px;
+	color: rgb(63, 63, 63);
+	padding: 10px 100px;
 }

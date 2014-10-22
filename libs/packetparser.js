@@ -5,7 +5,8 @@ var parse = function(packet) {
 	var TYPE_FIELD_LENGTH = 2,
 			LENGTH_FIELD_LENGTH = 2,
 			DELLEN_OFFSET = 4,
-			DELIMITER_VALUE = 0xABD5;
+			DELIMITER_VALUE = 0xABD5,
+			MIN_PACKET_LENGTH = DELLEN_OFFSET + TYPE_FIELD_LENGTH + LENGTH_FIELD_LENGTH + 1;
 	
 	var readTLV = function(buf, position) {
 		var type = buf.readUInt16BE(position),
@@ -13,6 +14,10 @@ var parse = function(packet) {
 				value = new Buffer(length),
 				copyStart = position + TYPE_FIELD_LENGTH + LENGTH_FIELD_LENGTH,
 				copyEnd = copyStart + length;
+
+				if (buf.length < copyEnd) {
+					return false;
+				}
 
 				if (!length) return false;
 	
@@ -31,6 +36,14 @@ var parse = function(packet) {
 			errorCode: 56,
 			errorMessage: 'argument is not a Buffer'
 		};
+	}
+
+	if (packet.length < MIN_PACKET_LENGTH) {
+		return {
+			result: false,
+			errorCode: 57,
+			errorMessage: 'packet is too short'
+		}
 	}
 
 	var delimiter = packet.readUInt16BE(0);
@@ -63,9 +76,15 @@ var parse = function(packet) {
 
 	while (currentPosition < packetLength) {
 		var tlv = readTLV(packet, currentPosition);
-		if (!tlv) break;
+		if (!tlv) {
+			return {
+				result: false,
+				errorCode: 58,
+				errorMessage: 'error reading TLV'
+			}
+		}
 		parsed.tlvs.push(tlv);
-		currentPosition += parsed.tlvs[parsed.tlvs.length - 1].length + TYPE_FIELD_LENGTH + LENGTH_FIELD_LENGTH;
+		currentPosition += tlv.length + TYPE_FIELD_LENGTH + LENGTH_FIELD_LENGTH;
 	}
 
 	return parsed;
