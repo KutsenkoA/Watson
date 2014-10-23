@@ -22,10 +22,10 @@ angular.module('watson')
 
 						$scope.packet = packet.data;
 
-						if (requests > 10) {
+						if (requests > 10 && $scope.packet.errorCode < 10) {
 							$scope.packet.errorMessage = 'Where is my packet?';
 						}
-						if (requests > 30) {
+						if (requests > 30 && $scope.packet.errorCode < 10) {
 							$scope.packet.errorMessage = 'Somebody, send me a packet!';
 						}
 

@@ -6,10 +6,17 @@ exports.index = function(req, res){
 };
 
 exports.graph = function(req, res) {
-  var q = rawData.find().sort({'time': -1}).limit(10);
+  var q = rawData.find().sort({'time': -1}).select('value').limit(30);
 
   q.exec(function(err, data) {
-    res.send(data);
+
+  	var dataArray = [];
+
+  	data.forEach(function(obj) {
+  		dataArray.push(obj.value);
+  	});
+
+    res.send(dataArray);
   });
 };
 

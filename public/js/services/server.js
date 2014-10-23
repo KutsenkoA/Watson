@@ -5,6 +5,9 @@ angular.module('watson')
 		return {
 			readLastPacket: function() {
 				return $http.get('/lastpacket');
+			},
+			readDataForGraph: function() {
+				return $http.get('/graph');
 			}
 		}
 	}]);

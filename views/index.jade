@@ -31,11 +31,11 @@ block dashboard
           i.icon-time &nbsp;
           span.value {{packet.time}}
           span src ip:
-          span.value {{packet.src}}
+          span.value {{packet.src.ip}}
           span src port:
-          span.value {{packet.port}}
-        ul.button-bar.tvl(ng-repeat='tvl in packet.tvls')
-          li.green
+          span.value {{packet.src.port}}
+        ul.button-bar.tvl(ng-repeat='tvl in packet.tlvs')
+          li
             a(href='')
               i.icon-tag 
               {{tvl.type}}
@@ -46,9 +46,10 @@ block dashboard
           li
             a(href='')
               {{tvl.value}}
-        .raw-packet(ng-show="packet.errorCode > 10")
-          {{packet.rawData}}
+      .raw-packet(ng-show="packet.errorCode > 10")
+        {{packet.rawData}}
     #graph.tab-content
+      #graph-container(ng-controller='graphController')
 
 block footer
   .footer

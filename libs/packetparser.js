@@ -13,7 +13,8 @@ var parse = function(packet) {
 				length = buf.readUInt16BE(position + TYPE_FIELD_LENGTH),
 				value = new Buffer(length),
 				copyStart = position + TYPE_FIELD_LENGTH + LENGTH_FIELD_LENGTH,
-				copyEnd = copyStart + length;
+				copyEnd = copyStart + length,
+				data;
 
 				if (buf.length < copyEnd) {
 					return false;
@@ -23,10 +24,24 @@ var parse = function(packet) {
 	
 				buf.copy(value, 0, copyStart, copyEnd);
 
+				switch(length) {
+					case 1:
+						data = value.readUInt8();
+						break;
+					case 2:
+						data = value.readUInt16BE();
+						break;
+					case 4:
+						data = value.readUInt32BE();
+						break;
+					default:
+						data = value;
+				}
+
 				return {
 					type: type,
 					length: length,
-					value: value
+					value: data
 				}
 	}
 
@@ -53,7 +68,7 @@ var parse = function(packet) {
 		return {
 			result: false,
 			errorCode: 12,
-			errorMessage: 'packet dont have delimiter',
+			errorMessage: 'packet doesn\'t have delimiter',
 			rawData: packet
 		}
 	}
