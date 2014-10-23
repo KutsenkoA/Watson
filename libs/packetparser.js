@@ -33,16 +33,17 @@ var parse = function(packet) {
 	if (!Buffer.isBuffer(packet)) {
 		return {
 			result: false,
-			errorCode: 56,
-			errorMessage: 'argument is not a Buffer'
+			errorCode: 1,
+			errorMessage: 'argument is not a Buffer',
 		};
 	}
 
 	if (packet.length < MIN_PACKET_LENGTH) {
 		return {
 			result: false,
-			errorCode: 57,
-			errorMessage: 'packet is too short'
+			errorCode: 11,
+			errorMessage: 'packet is too short',
+			rawData: packet
 		}
 	}
 
@@ -51,8 +52,9 @@ var parse = function(packet) {
 	if (delimiter !== DELIMITER_VALUE) {
 		return {
 			result: false,
-			errorCode: 50,
-			errorMessage: 'packet dont have delimiter'
+			errorCode: 12,
+			errorMessage: 'packet dont have delimiter',
+			rawData: packet
 		}
 	}
 
@@ -62,13 +64,16 @@ var parse = function(packet) {
 	if (packetLength != packet.length - DELLEN_OFFSET) {
 		return {
 			result: false,
-			errorCode: 51,
-			errorMessage: 'packet length not equal to PLength field'
+			errorCode: 13,
+			errorMessage: 'packet length not equal to PLength field',
+			rawData: packet
 		}
 	}
 
 	var parsed = {
 		result: true,
+		length: packetLength,
+		rawData: packet,
 		tlvs: []
 	};
 
@@ -80,7 +85,8 @@ var parse = function(packet) {
 			return {
 				result: false,
 				errorCode: 58,
-				errorMessage: 'error reading TLV'
+				errorMessage: 'error reading TLV',
+				rawData: packet
 			}
 		}
 		parsed.tlvs.push(tlv);

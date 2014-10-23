@@ -1,5 +1,5 @@
 var rawData = require('../models/rawdata');
-
+var socket = require('../workers/collector').socket;
 
 exports.index = function(req, res){
   res.render('index', { title: 'Watson', descr: 'wordwide best app :)'});
@@ -11,4 +11,8 @@ exports.graph = function(req, res) {
   q.exec(function(err, data) {
     res.send(data);
   });
+};
+
+exports.lastpacket = function(req, res) {
+	res.send(socket.lastPacket);
 };

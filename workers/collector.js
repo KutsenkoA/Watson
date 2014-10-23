@@ -5,6 +5,12 @@ var dgram = require('dgram'),
 
 var socket = dgram.createSocket('udp4');
 
+socket.lastPacket = {
+  result: false,
+  errorMessage: 'No one packets recieved from application start',
+  errorCode: 0
+};
+
 socket.on("error", function (err) {
   console.log("socket error:\n" + err.stack);
   socket.close();
@@ -14,9 +20,15 @@ socket.on("message", function (msg, rinfo) {
 
   var parsedPacket = parse(msg);
 
+  parsedPacket.src = {
+    ip: rinfo.address,
+    port: rinfo.port
+  };
+
   console.log("socket got: ", parsedPacket, " from " +
     rinfo.address + ":" + rinfo.port);
 
+  socket.lastPacket = parsedPacket;
 
 /*  var data = new mongoose.models.rawData({
       marker: 'test_data',
@@ -26,7 +38,7 @@ socket.on("message", function (msg, rinfo) {
 
   data.save();
 */
-});
+})
 
 socket.on("listening", function () {
   var address = socket.address();

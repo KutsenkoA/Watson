@@ -23,25 +23,31 @@ block dashboard
       li
         a(href='#graph') Graph
     #lastPacket.tab-content
-      .packet-caption
-        i.icon-time &nbsp;
-        span.value {{packet.time}}
-        span src ip:
-        span.value {{packet.src}}
-        span src port:
-        span.value {{packet.port}}
-      ul.button-bar.tvl(ng-repeat='tvl in packet.tvls')
-        li.green
-          a(href='')
-            i.icon-tag 
-            {{tvl.type}}
-        li
-          a(href='')
-            i.icon-resize-horizontal
-            {{tvl.length}}
-        li
-          a(href='')
-            {{tvl.value}}
+      .notice.error(ng-show="!packet.result")
+        i.icon-remove-sign.icon-large
+        {{packet.errorMessage}}
+      .packet(ng-show="packet.result")
+        .packet-caption
+          i.icon-time &nbsp;
+          span.value {{packet.time}}
+          span src ip:
+          span.value {{packet.src}}
+          span src port:
+          span.value {{packet.port}}
+        ul.button-bar.tvl(ng-repeat='tvl in packet.tvls')
+          li.green
+            a(href='')
+              i.icon-tag 
+              {{tvl.type}}
+          li
+            a(href='')
+              i.icon-resize-horizontal
+              {{tvl.length}}
+          li
+            a(href='')
+              {{tvl.value}}
+        .raw-packet(ng-show="packet.errorCode > 10")
+          {{packet.rawData}}
     #graph.tab-content
 
 block footer
