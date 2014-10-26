@@ -32,7 +32,10 @@ var parse = function(packet) {
 						data = value.readUInt16BE();
 						break;
 					case 4:
-						data = value.readUInt32BE();
+						data = value.readFloatLE();
+						break;
+					case 256:
+						data = value.toString();
 						break;
 					default:
 						data = value;

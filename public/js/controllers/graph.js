@@ -32,7 +32,6 @@ angular.module('watson')
                       //pointInterval: 24 * 3600
                   }]
               });
-    				console.log(data);
 					})
 				}, 5000);
 		}]);

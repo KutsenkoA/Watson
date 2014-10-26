@@ -23,31 +23,39 @@ block dashboard
       li
         a(href='#graph') Graph
     #lastPacket.tab-content
-      .notice.error(ng-show="!packet.result")
-        i.icon-remove-sign.icon-large
-        {{packet.errorMessage}}
-      .packet(ng-show="packet.result")
-        .packet-caption
-          i.icon-time &nbsp;
-          span.value {{packet.time}}
-          span src ip:
-          span.value {{packet.src.ip}}
-          span src port:
-          span.value {{packet.src.port}}
-        ul.button-bar.tvl(ng-repeat='tvl in packet.tlvs')
-          li
-            a(href='')
-              i.icon-tag 
-              {{tvl.type}}
-          li
-            a(href='')
-              i.icon-resize-horizontal
-              {{tvl.length}}
-          li
-            a(href='')
-              {{tvl.value}}
-      .raw-packet(ng-show="packet.errorCode > 10")
-        {{packet.rawData}}
+      ul.packet-list
+        div.packet-settings
+          span Show packets:
+          input(type='text', ng-model='packetsCount', size='5', onClick='this.select();')
+          span interval (ms):
+          input(type='text', ng-model='updateInterval', ng-disabled='sharker.act' size='5', onClick='this.select();')
+          button.small(ng-click='shark()') {{sharker.contr}}
+        li(ng-repeat='packet in packets')
+          .notice.error(ng-show="!packet.result")
+            i.icon-remove-sign.icon-large
+            {{packet.errorMessage}}
+          .packet(ng-show="packet.result")
+            .packet-caption
+              i.icon-time &nbsp;
+              span.value {{packet.time}}
+              span src ip:
+              span.value {{packet.src.ip}}
+              span src port:
+              span.value {{packet.src.port}}
+            ul.button-bar.tvl(ng-repeat='tvl in packet.tlvs')
+              li
+                a(href='')
+                  i.icon-tag 
+                  {{tvl.type}}
+              li
+                a(href='')
+                  i.icon-resize-horizontal
+                  {{tvl.length}}
+              li
+                a(href='')
+                  {{tvl.value}}
+          .raw-packet(ng-show="packet.errorCode > 10")
+            {{packet.rawData}}
     #graph.tab-content
       #graph-container(ng-controller='graphController')
 

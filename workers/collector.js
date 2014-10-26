@@ -5,11 +5,9 @@ var dgram = require('dgram'),
 
 var socket = dgram.createSocket('udp4');
 
-socket.lastPacket = {
-  result: false,
-  errorMessage: 'No packets recieved from application start',
-  errorCode: 0
-};
+var keepPackets = 100;
+
+socket.packets = [];
 
 socket.on("error", function (err) {
   console.log("socket error:\n" + err.stack);
@@ -30,18 +28,24 @@ socket.on("message", function (msg, rinfo) {
   console.log("socket got: ", parsedPacket, " from " +
     rinfo.address + ":" + rinfo.port);
 
-  socket.lastPacket = parsedPacket;
+  socket.packets.push(parsedPacket);
 
-  parsedPacket.tlvs.forEach(function(tlv) {
-    if (tlv.type == 20) {
-      var data = new mongoose.models.rawData({
-        marker: 'test_data',
-        time: new Date(),
-        value: tlv.value
-      });
-      data.save();
-    }
-  });
+  if (socket.packets.length > keepPackets) {
+    socket.packets = socket.packets.slice(socket.packets.length - 2 * keepPackets -1);
+  }
+
+  if (parsedPacket.result) {
+    parsedPacket.tlvs.forEach(function(tlv) {
+      if (tlv.type == 20) {
+        var data = new mongoose.models.rawData({
+          marker: 'test_data',
+          time: new Date(),
+          value: tlv.value
+        });
+        data.save();
+      }
+    });
+  }
 })
 
 socket.on("listening", function () {

@@ -3,8 +3,8 @@
 angular.module('watson')
 	.service('serverService', ['$http', function($http) {
 		return {
-			readLastPacket: function() {
-				return $http.get('/lastpacket');
+			readLastPackets: function(count) {
+				return $http.get('/lastpackets/' + count);
 			},
 			readDataForGraph: function() {
 				return $http.get('/graph');

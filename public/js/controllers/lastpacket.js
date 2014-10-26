@@ -5,32 +5,34 @@ angular.module('watson')
 		['$scope', '$interval', 'serverService', 
 			function($scope, $interval, serverService) {
 
-				var requests = 0;
+				var packets = [];
 		
-				$scope.packet = {
-					result: false,
-					errorMessage: 'Waiting for the first packet',
-					errorCode: 0
+				$scope.packets = [];
+				$scope.packetsCount = 3;
+
+				$scope.sharker = {
+					contr: 'start',
+					act: false
 				};
 
-				$scope.updateInterval = 5000;
-
-				$interval(function() {
-					serverService.readLastPacket().then(function(packet) {
-						
-						requests = packet.data.result ? 0 : requests + 1;
-
-						$scope.packet = packet.data;
-
-						if (requests > 10 && $scope.packet.errorCode < 10) {
-							$scope.packet.errorMessage = 'Where is my packet?';
+				$scope.shark = function() {
+					if ($scope.sharker.act) {
+						$scope.sharker.contr = 'start';
+						$scope.sharker.act = false;
+						$interval.cancel($scope.sharker.process);
+					} else {
+						$scope.sharker.contr = 'stop';
+						$scope.sharker.act = true;
+						if ($scope.updateInterval < 500) {
+							$scope.updateInterval = 500;
 						}
-						if (requests > 30 && $scope.packet.errorCode < 10) {
-							$scope.packet.errorMessage = 'Somebody, send me a packet!';
-						}
+						$scope.sharker.process = $interval(function() {
+								serverService.readLastPackets($scope.packetsCount).then(function(packets) {
+								$scope.packets = packets.data;
+							});
+						}, $scope.updateInterval);
+					}
+				}
 
-						console.log(packet);
-
-					});
-				}, $scope.updateInterval)
+				$scope.updateInterval = 3000;
 	}]);

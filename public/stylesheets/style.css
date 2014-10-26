@@ -48,6 +48,21 @@ nav button {
 	padding: 10px 50px;
 }
 
+.packet-settings {
+	border-bottom: 1px solid lightgray;
+	padding-bottom: 3px;
+}
+
+.packet-settings span {
+	padding-left: 5px;
+	padding-right: 2px;
+}
+
+.packet-settings input {
+	font-size: 0.8em;
+	margin-right: 3px;
+}
+
 .packet-caption {
 	font-size: 12px;
 	padding: 6px;
