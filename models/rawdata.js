@@ -16,4 +16,8 @@ var rawData = new Schema({
     }
 });
 
+rawData.virtual('timeUTC').get(function() {
+    return this.time.getTime();
+});
+
 module.exports = mongoose.model('rawData', rawData);
