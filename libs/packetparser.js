@@ -33,6 +33,13 @@ var parse = function(packet) {
 						break;
 					case 4:
 						data = value.readFloatLE();
+						if (isNaN(data)) {
+							return {
+								result: false,
+								errorCode: 18,
+								errorMessage: 'Recieved not a number value (NaN)'
+							}
+						}
 						break;
 					case 256:
 						data = value.toString();
