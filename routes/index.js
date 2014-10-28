@@ -6,14 +6,16 @@ exports.index = function(req, res){
 };
 
 exports.graph = function(req, res) {
-  var q = rawData.find().sort({'time': -1}).select('value').limit(300);
+  var yesterday = new Date();
+  yesterday.setHours(yesterday.getHours() - 15);
+  var q = rawData.find({'time': {$gt: yesterday}}).sort({'time': 1});
 
   q.exec(function(err, data) {
 
   	var dataArray = [];
 
   	data.forEach(function(obj) {
-  		dataArray.push(obj.value);
+  		dataArray.push([obj.timeUTC, obj.value]);
   	});
 
     res.send(dataArray);
