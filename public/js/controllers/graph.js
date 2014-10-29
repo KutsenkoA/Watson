@@ -21,7 +21,8 @@ angular.module('watson')
               yAxis: {
                 title: {
                   text: 'Temperature'
-                }
+                },
+                min: 10
               },
               series: [{
                 name: 'sensor 20',
