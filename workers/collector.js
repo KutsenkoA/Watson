@@ -23,7 +23,9 @@ socket.on("message", function (msg, rinfo) {
     port: rinfo.port
   };
 
-  parsedPacket.time = Date();
+  parsedPacket.time = new Date();
+
+  console.log(parsedPacket.time);
 
   console.log("socket got: ", parsedPacket, " from " +
     rinfo.address + ":" + rinfo.port);
@@ -43,6 +45,7 @@ socket.on("message", function (msg, rinfo) {
           value: tlv.value
         });
         data.save();
+        console.log(data);
       }
     });
   }
