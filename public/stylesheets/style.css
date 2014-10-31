@@ -17,6 +17,15 @@ nav button {
 	float: right;
 }
 
+table thead tr {
+	background: #222222;
+	color: gray;
+}
+
+table th {
+	padding: 10px !important;
+}
+
 .logo {
 	font-size: 32px;
 }
@@ -83,8 +92,20 @@ nav button {
 	color: darkolivegreen;
 }
 
-.tvl {
+.chunk {
 	padding: 0 3px !important;
+}
+
+a.chunk-table-btn {
+	margin: 2px;
+}
+
+a.edit {
+	color: forestgreen;
+}
+
+a.remove {
+	color: darkred;
 }
 
 .footer {

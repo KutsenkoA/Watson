@@ -3,16 +3,16 @@ var mongoose = require('../libs/mongoose'),
 
 var rawData = new Schema({
     marker: {
-	type: String,
-	required: true
+        type: String,
+        required: true
     },
     time: {
-	type: Date,
-	required: true
+        type: Date,
+        required: true
     },
     value: {
-	type: Number,
-	required: true
+        type: Number,
+        required: true
     }
 });
 

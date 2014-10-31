@@ -23,7 +23,7 @@ block dashboard
       li
         a(href='#graph') Graph
       li
-        a(href='#tlvs') TLV's
+        a(href='#chunks') Chunks
     #lastPacket.tab-content
       ul.packet-list
         div.packet-settings
@@ -60,17 +60,17 @@ block dashboard
             {{packet.rawData}}
     #graph.tab-content
       #graph-container(ng-controller='graphController')
-    #tlvs.tab-content
-      #tlvs-container(ng-controller='tlvsController')
-        #tlvs-buttons
-          button.small(ng-click='addTLV()') add
-        #tlvs-add(ng-show='addTLVFormVisible')
+    #chunks.tab-content
+      #chunks-container(ng-controller='chunksController')
+        #chunks-buttons
+          button.small(ng-click='addChunk()') add
+        #chunks-add(ng-show='addTLVFormVisible')
           form
             label(for='tlvName') TLV name:
-            input(type='text', name='tlvName', placeholder='Enter TLV name')
+            input(type='text', name='tlvName', placeholder='Enter TLV name', ng-model='chunk.name')
             label(for='typeValue') type value:
-            input(type='number', name='typeValue', placeholder='Enter type value')
-            select.fancy(name='tlvParse')
+            input(type='number', name='typeValue', placeholder='Enter type value', ng-model='chunk.typeValue')
+            select.fancy(name='tlvParse', ng-model='chunk.parse')
               option(value='0') -- Choose parse method --
               option(value='uint8') unsigned int 1 bytes
               option(value='uint16') unsigned int 2 bytes
@@ -80,8 +80,27 @@ block dashboard
               option(value='doubleBE') double 8 bytes BE
               option(value='doubleLE') double 8 bytes LE
               option(value='string') string
-            button.small.green save
-        #tlvs-table
+            button.small.green(ng-click='saveChunk()') save
+        #chunks-table
+          table
+            thead
+              tr
+                th Name
+                th Type value
+                th Parse
+                th Actions
+            tbody
+              tr(ng-repeat='chunk in chunks')
+                th {{chunk.name}}
+                th {{chunk.typeValue}}
+                th {{chunk.parse}}
+                th
+                  button.small(href='', ng-click='')
+                    i.icon-cogs
+                    span  edit
+                  button.small(href='', ng-click='')
+                    i.icon-remove
+                    span  remove
 
 block footer
   .footer

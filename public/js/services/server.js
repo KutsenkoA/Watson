@@ -8,6 +8,14 @@ angular.module('watson')
 			},
 			readDataForGraph: function() {
 				return $http.get('/graph');
+			},
+			saveChunk: function(chunk) {
+				return $http.put('/chunk', {
+					chunk: chunk
+				});
+			},
+			getChunks: function() {
+				return $http.get('/chunks');
 			}
 		}
 	}]);
