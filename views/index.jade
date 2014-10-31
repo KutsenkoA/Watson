@@ -22,6 +22,8 @@ block dashboard
         a(href='#lastPacket') Last packet
       li
         a(href='#graph') Graph
+      li
+        a(href='#tlvs') TLV's
     #lastPacket.tab-content
       ul.packet-list
         div.packet-settings
@@ -58,6 +60,28 @@ block dashboard
             {{packet.rawData}}
     #graph.tab-content
       #graph-container(ng-controller='graphController')
+    #tlvs.tab-content
+      #tlvs-container(ng-controller='tlvsController')
+        #tlvs-buttons
+          button.small(ng-click='addTLV()') add
+        #tlvs-add(ng-show='addTLVFormVisible')
+          form
+            label(for='tlvName') TLV name:
+            input(type='text', name='tlvName', placeholder='Enter TLV name')
+            label(for='typeValue') type value:
+            input(type='number', name='typeValue', placeholder='Enter type value')
+            select.fancy(name='tlvParse')
+              option(value='0') -- Choose parse method --
+              option(value='uint8') unsigned int 1 bytes
+              option(value='uint16') unsigned int 2 bytes
+              option(value='uint32') unsigned int 4 bytes
+              option(value='floatBE') float 4 bytes BE
+              option(value='floatLE') float 4 bytes LE
+              option(value='doubleBE') double 8 bytes BE
+              option(value='doubleLE') double 8 bytes LE
+              option(value='string') string
+            button.small.green save
+        #tlvs-table
 
 block footer
   .footer
