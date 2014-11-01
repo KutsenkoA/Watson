@@ -14,6 +14,9 @@ angular.module('watson')
 					chunk: chunk
 				});
 			},
+			removeChunk: function(chunk) {
+				return $http.delete('/chunk/' + chunk._id);
+			},
 			getChunks: function() {
 				return $http.get('/chunks');
 			}

@@ -1,6 +1,7 @@
 {
   "name": "Watson",
   "version": "0.0.1",
+  "description": "",
   "private": true,
   "scripts": {
     "start": "forever start -w app.js",

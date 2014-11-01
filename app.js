@@ -35,6 +35,7 @@ app.get('/lastpackets/:count', routes.lastpacket);
 
 app.put('/chunk', routes.chunk.save);
 app.get('/chunks', routes.chunk.list);
+app.delete('/chunk/:id', routes.chunk.remove);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

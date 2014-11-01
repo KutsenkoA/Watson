@@ -62,45 +62,24 @@ block dashboard
       #graph-container(ng-controller='graphController')
     #chunks.tab-content
       #chunks-container(ng-controller='chunksController')
-        #chunks-buttons
-          button.small(ng-click='addChunk()') add
-        #chunks-add(ng-show='addTLVFormVisible')
-          form
-            label(for='tlvName') TLV name:
-            input(type='text', name='tlvName', placeholder='Enter TLV name', ng-model='chunk.name')
-            label(for='typeValue') type value:
-            input(type='number', name='typeValue', placeholder='Enter type value', ng-model='chunk.typeValue')
-            select.fancy(name='tlvParse', ng-model='chunk.parse')
-              option(value='0') -- Choose parse method --
-              option(value='uint8') unsigned int 1 bytes
-              option(value='uint16') unsigned int 2 bytes
-              option(value='uint32') unsigned int 4 bytes
-              option(value='floatBE') float 4 bytes BE
-              option(value='floatLE') float 4 bytes LE
-              option(value='doubleBE') double 8 bytes BE
-              option(value='doubleLE') double 8 bytes LE
-              option(value='string') string
-            button.small.green(ng-click='saveChunk()') save
-        #chunks-table
+        #chunk-buttons
+          button.small.orange(ng-click='addChunk()') add
+          ul.button-bar.chunk-btn-bar
+            li(ng-repeat="base in basis")
+              a(href='', ng-click="setBase(base)", ng-class="{'btn-pressed': showTypeValueBase === base}") {{base}}
+        widget-chunk(ng-show='addTLVFormVisible')
+        #chunk-table
           table
             thead
               tr
                 th Name
                 th Type value
                 th Parse
-                th Actions
             tbody
-              tr(ng-repeat='chunk in chunks')
+              tr.clickable(ng-repeat='chunk in chunks', ng-click='editChunk(chunk)')
                 th {{chunk.name}}
-                th {{chunk.typeValue}}
+                th {{chunk.typeValue | base:showTypeValueBase}}
                 th {{chunk.parse}}
-                th
-                  button.small(href='', ng-click='')
-                    i.icon-cogs
-                    span  edit
-                  button.small(href='', ng-click='')
-                    i.icon-remove
-                    span  remove
 
 block footer
   .footer

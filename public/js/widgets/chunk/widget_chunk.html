@@ -1,0 +1,35 @@
+<form class='simple-form' name="chunk_form" novalidate xmlns="http://www.w3.org/1999/html">
+    <label for="chunkName">Chunk name:</label>
+    <input
+            type="text"
+            name="chunkName"
+            placeholder="chunk name"
+            ng-model="chunk.name"
+            required
+            />
+    <label for="typeValue">type value:</label>
+    <input
+            type="number"
+            name="typeValue"
+            placeholder="type value"
+            ng-model="chunk.typeValue"
+            required
+            />
+    <select name="chunkParse" ng-model="chunk.parse">
+        <option value="0">-- Choose parse method --</option>
+        <option value="uint8">unsigned int 1 bytes</option>
+        <option value="uint16">unsigned int 2 bytes</option>
+        <option value="uint32">unsigned int 4 bytes</option>
+        <option value="floatBE">float 4 bytes BE</option>
+        <option value="floatLE'">float 4 bytes LE</option>
+        <option value="doubleBE">double 8 bytes BE</option>
+        <option value="doubleLE">double 8 bytes LE</option>
+        <option value="string">string</option>
+    </select>
+    <div class="form-btns">
+        <button class="small red" ng-show="isEditChunk" ng-click="removeChunk()">remove</button>
+        <button class="small green" ng-click="saveChunk()" ng-disabled="chunk_form.$invalid">save</button>
+        <button class="small" ng-click="closeChunk()">close</button>
+        <div class="form-error" ng-show="chunk_form.$invalid">error</div>
+    </div>
+</form>
