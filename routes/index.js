@@ -1,5 +1,6 @@
 var rawData = require('../models/rawdata');
 var socket = require('../workers/collector').socket;
+var chunk = require('./chunk');
 
 exports.index = function(req, res){
   res.render('index', { title: 'Watson', descr: 'wordwide best app :)'});
@@ -30,3 +31,5 @@ exports.lastpacket = function(req, res) {
     }
   }).reverse());
 };
+
+exports.chunk = chunk;

@@ -17,6 +17,49 @@ nav button {
 	float: right;
 }
 
+table thead tr {
+	background: #222222;
+	color: gray;
+}
+
+table thead tr th:first-child {
+	border-top-left-radius: 6px;
+}
+
+table thead tr th:last-child {
+	border-top-right-radius: 6px;
+}
+
+table th {
+	padding: 10px !important;
+}
+
+table tr.clickable {
+	cursor: pointer;
+}
+table tr.clickable:hover {
+	background: antiquewhite;
+}
+
+.simple-form {
+	position: fixed;
+	background: gainsboro;
+	padding: 10px;
+	border: 1px solid;
+	border-radius: 2px;
+	z-index: 500;
+}
+.form-btns {
+	padding-top: 6px;
+}
+
+.btn-pressed {
+	-webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,0.2),inset 0 -10px 20px rgba(0,0,0,0.07);
+	-moz-box-shadow: inset 0 3px 5px rgba(0,0,0,0.2),inset 0 -10px 20px rgba(0,0,0,0.07);
+	box-shadow: inset 0 3px 5px rgba(0,0,0,0.2),inset 0 -10px 20px rgba(0,0,0,0.07);
+	border-left: 1px solid #ccc;
+}
+
 .logo {
 	font-size: 32px;
 }
@@ -83,8 +126,34 @@ nav button {
 	color: darkolivegreen;
 }
 
-.tvl {
+.chunk {
 	padding: 0 3px !important;
+}
+
+#chunk-buttons {
+	border-bottom: 1px solid lightgray;
+	padding-bottom: 3px;
+	margin-bottom: 5px;
+}
+.chunk-btn-bar {
+	vertical-align: top;
+	margin: 0 10px !important;
+}
+.chunk-btn-bar li a {
+	padding: 5px 10px !important;
+	font-size: 12px !important;
+}
+
+a.chunk-table-btn {
+	margin: 2px;
+}
+
+a.edit {
+	color: forestgreen;
+}
+
+a.remove {
+	color: darkred;
 }
 
 .footer {

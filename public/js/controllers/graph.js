@@ -32,6 +32,11 @@ angular.module('watson')
               plotOptions: {
                 series: {
                   pointInterval: 3600 * 1000
+                },
+                line: {
+                  marker: {
+                    enabled: false
+                  }
                 }
               }
             });

@@ -22,6 +22,8 @@ block dashboard
         a(href='#lastPacket') Last packet
       li
         a(href='#graph') Graph
+      li
+        a(href='#chunks') Chunks
     #lastPacket.tab-content
       ul.packet-list
         div.packet-settings
@@ -58,6 +60,26 @@ block dashboard
             {{packet.rawData}}
     #graph.tab-content
       #graph-container(ng-controller='graphController')
+    #chunks.tab-content
+      #chunks-container(ng-controller='chunksController')
+        #chunk-buttons
+          button.small.orange(ng-click='addChunk()') add
+          ul.button-bar.chunk-btn-bar
+            li(ng-repeat="base in basis")
+              a(href='', ng-click="setBase(base)", ng-class="{'btn-pressed': showTypeValueBase === base}") {{base}}
+        widget-chunk(ng-show='addTLVFormVisible')
+        #chunk-table
+          table
+            thead
+              tr
+                th Name
+                th Type value
+                th Parse
+            tbody
+              tr.clickable(ng-repeat='chunk in chunks', ng-click='editChunk(chunk)')
+                th {{chunk.name}}
+                th {{chunk.typeValue | base:showTypeValueBase}}
+                th {{chunk.parse}}
 
 block footer
   .footer
